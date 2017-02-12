@@ -13,13 +13,13 @@ import com.wc.blog.dao.UserDao;
 /**
  * Servlet implementation class Servlet
  */
-public class Servlet extends HttpServlet {
+public class LoginController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public Servlet() {
+    public LoginController() {
         super();
         // TODO Auto-generated constructor stub
     }

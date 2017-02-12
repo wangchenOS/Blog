@@ -8,15 +8,15 @@
     <servlet-class>Controller</servlet-class>
   </servlet>
   <servlet>
-    <servlet-name>Servlet</servlet-name>
-    <servlet-class>com.wc.blog.controller.Servlet</servlet-class>
+    <servlet-name>LoginController</servlet-name>
+    <servlet-class>com.wc.blog.controller.LoginController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>Controller</servlet-name>
     <url-pattern>/Controller</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
-    <servlet-name>Servlet</servlet-name>
+    <servlet-name>LoginController</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
   <servlet>

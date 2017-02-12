@@ -1,15 +1,22 @@
 package com.wc.blog.controller;
 
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.wc.blog.bean.Blog;
+import com.wc.blog.bean.Draft;
 import com.wc.blog.bean.User;
 import com.wc.blog.dao.BlogDao;
+import com.wc.blog.dao.DraftDao;
 
 /**
  * Servlet implementation class BlogController
@@ -31,7 +38,7 @@ public class BlogController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
-		User login_user = (User)request.getSession().getAttribute("login-user");
+		/*User login_user = (User)request.getSession().getAttribute("login-user");
 		if(login_user == null){
 		    // 说明用户没有登录，让他跳转到登录页面
 		    request.setAttribute("error", "请登录！");
@@ -40,7 +47,26 @@ public class BlogController extends HttpServlet {
 		    // 这个return很重要！
 		    return;
 		}
-		response.sendRedirect("/Blog/console.jsp");
+		response.sendRedirect("/Blog/console.jsp");*/
+		
+		String type = request.getParameter("type");
+		/*String content = request.getParameter("content");
+		String tag = request.getParameter("tag");*/
+		if (type.equals("draft")) {
+			List<Draft> list = DraftDao.queryAllDrafts();
+			PrintWriter out = response.getWriter();
+			Gson gson = new Gson();
+			String str = gson.toJson(list);
+			JsonObject obj = new JsonObject();
+			obj.addProperty("result", str);
+			System.out.println(obj.toString());
+			try {
+				// Write some content
+				out.println(str);
+			} finally {
+				out.close();
+			} 
+		}
 	}
 
 	/**
@@ -68,4 +94,24 @@ public class BlogController extends HttpServlet {
 		BlogDao.saveBlog(name, blog);
 	}
 
+	@Override
+	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		//super.doDelete(req, resp);
+		String type = req.getParameter("type");
+		String id = req.getParameter("id");
+		/*String content = request.getParameter("content");
+		String tag = request.getParameter("tag");*/
+		if (type.equals("draft")) {
+			PrintWriter out = resp.getWriter();
+			System.out.println("type:" + type + "|id:" + id);
+			try {
+				DraftDao.deleteDraft(Integer.parseInt(id));
+				// Write some content
+				out.println("OK");
+			} finally {
+				out.close();
+			} 
+		}
+	}
 }

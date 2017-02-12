@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=utf-8"
-    pageEncoding="utf-8"%>
+<%@ page language="java" contentType="text/html; charset=utf-8"%>
 <!DOCTYPE html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -45,8 +44,8 @@
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">发布文章</a></li>
-            <li><a href="#">文章管理</a></li>
-            <li><a href="#">草稿夹</a></li>
+            <li><a href="" onclick="">文章管理</a></li>
+            <li><a href="#" onclick="showDraft()">草稿夹</a></li>
           </ul>
           
         </div>
@@ -60,5 +59,15 @@
         </div>
       </div>
     </div>
+    
+     <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+     <script type="text/javascript">
+	     function showDraft()
+	     {
+	    	$("iframe").attr("src", "Draft.jsp");
+	     }
+		
+	</script>
 </body>
 </html>
