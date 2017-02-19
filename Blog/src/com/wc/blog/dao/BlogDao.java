@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -11,10 +12,11 @@ import com.wc.blog.bean.Blog;
 import com.wc.blog.bean.Draft;
 
 public class BlogDao {
-	public static void saveBlog(String name, Blog blog) {
+	public static int saveBlog(String name, Blog blog) {
 		Connection c = null;
 		PreparedStatement pst = null;
 		ResultSet rs = null;
+		int returnID= -1;
 		try {
 			c = SQLiteJDBC.openConnection();
 			c.setAutoCommit(false);
@@ -38,9 +40,19 @@ public class BlogDao {
 				pst.setString(4, blog.getTag());
 				pst.setInt(5, user_id);
 				
-				int result = pst.executeUpdate();
-			    c.commit();
+				pst.executeUpdate();
+				
+			  
+				c.commit();
+			    
 			}
+			
+			 sql = "select last_insert_rowid() from Blog";
+			 pst = c.prepareStatement(sql);
+			 rs = pst.executeQuery(); //获取结果   
+			 if (rs.next()) {
+				    returnID = rs.getInt(1);//取得ID
+				}
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
 			// System.exit(0);
@@ -59,7 +71,7 @@ public class BlogDao {
 			SQLiteJDBC.closeConnection(c);
 
 		}
-		return;
+		return returnID;
 	}
 	
 	
@@ -239,6 +251,56 @@ public class BlogDao {
 
 		}
 		return list;
+	}
+	
+	public static Blog queryOneBlog(int id) {
+		Connection c = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		//Blog blog = new Blog();
+		Blog blog = new Blog();
+		try {
+			c = SQLiteJDBC.openConnection();
+			c.setAutoCommit(false);
+			System.out.println("Opened database successfully");
+
+			String sql = "select * from Blog where id = ?";  
+			pst = c.prepareStatement(sql);
+			pst.setInt(1, id);
+			rs = pst.executeQuery();
+			
+			if (rs.next()) {
+				String title = rs.getString("title");
+				blog.setTitle(title);
+				
+				String content = rs.getString("content");
+				blog.setContent(content);
+				
+				String file = rs.getString("file");
+				blog.setFile(file);
+				
+				String tag = rs.getString("tag");
+				blog.setTag(tag );
+				
+			}
+		} catch (Exception e) {
+			System.err.println(e.getClass().getName() + ": " + e.getMessage());
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+				if (pst != null) {
+					pst.close();
+				}
+			} catch (SQLException e) {
+				System.out.println("SQLException");
+			}
+			SQLiteJDBC.closeConnection(c);
+
+		}
+		return blog;
 	}
 	public static void main(String[] args) {
 		readBlog("wc");

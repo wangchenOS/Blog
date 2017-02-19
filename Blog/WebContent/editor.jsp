@@ -33,8 +33,9 @@
         <h1 style="text-align:center">博客后台</h1>
       </div>
       <div class="row">
-          <form action="<%=basePath %>BlogController" method="POST">
+          <form id="form" name="form" action="<%=basePath %>ConsoleController" method="POST">
               <input type="hidden" class="form-control" id="content" name="content" value="1">
+              <input type="hidden" class="form-control" id="type" name="type" value="1">
               
               <div class="form-group">
                 <label for="title">标题</label>
@@ -56,8 +57,8 @@
                 <!--input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"-->
               </div>
             
-              <button type="submit" class="btn btn-primary">保存</button>
-              <button type="button" class="btn btn-primary">发布</button>
+              <button type="submit" class="btn btn-primary" onclick="saveDraft()">保存</button>
+              <button type="button" class="btn btn-primary" onclick="saveBlog()">发布</button>
             </form>
         </div>
     </div>
@@ -113,7 +114,43 @@
     
     </script>
     <script type="text/javascript">
-		$(document).ready(function(){
+    	function saveBlog() {
+    		 editor.save();
+    		 var theContent = editor.exportFile();
+    		  $("#content").val(theContent);
+    		  $("#type").val("draft");
+    		  //window.parent.location.href="";
+    		  
+    		  
+    		  var AjaxURL= "<%=basePath %>ConsoleController";    
+    	      //alert($('#form').serialize());
+    	        $.ajax({
+    	          type: "POST",
+    	          dataType: "html",
+    	          url: AjaxURL,
+    	          data: $('#form').serialize(),
+    	          success: function (result) {
+    	            alert(result);
+    	            
+    	            window.parent.location.href="<%=basePath %>blogShow?id=" + result ;
+    	            //加载最大可退金额
+    	            //$("#spanMaxAmount").html(strresult);
+    	          },
+    	          error: function(data) {
+    	            //alert("error:"+data.responseText);
+    	           }
+    	 
+    	        });
+    	        //window.parent.location.href="/blog.jsp";
+    	}
+    	
+    	function saveDraft() {
+    		 editor.save();
+    		 var theContent = editor.exportFile();
+    		  $("#content").val(theContent);
+    		  $("#type").val("blog");
+   	}
+		/* $(document).ready(function(){
 	    $("form").submit(function(e){
 	    //e.preventDefault();
 	    editor.save();
@@ -121,12 +158,12 @@
 	    alert("Submit prevented :" + theContent);
 	    $("#content").val(theContent);
 	    //alert("Submit prevented :" + theContent);
-		/*   saveToServerAjaxCall('/save', {data:theContent}, function () {
+		   saveToServerAjaxCall('/save', {data:theContent}, function () {
 		    console.log('Data was saved to the database.');
-		  }); */
+		  }); 
 	    
-	  });
-	});
+	  }); 
+	});*/
 	</script>
 </body>
 </html>

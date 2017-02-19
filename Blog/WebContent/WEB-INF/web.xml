@@ -3,22 +3,27 @@
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <servlet-name>Controller</servlet-name>
-    <servlet-class>Controller</servlet-class>
-  </servlet>
+  
   <servlet>
     <servlet-name>LoginController</servlet-name>
     <servlet-class>com.wc.blog.controller.LoginController</servlet-class>
   </servlet>
   <servlet-mapping>
-    <servlet-name>Controller</servlet-name>
-    <url-pattern>/Controller</url-pattern>
-  </servlet-mapping>
-  <servlet-mapping>
     <servlet-name>LoginController</servlet-name>
     <url-pattern>/login</url-pattern>
   </servlet-mapping>
+  
+  <servlet>
+    <description></description>
+    <display-name>ConsoleController</display-name>
+    <servlet-name>ConsoleController</servlet-name>
+    <servlet-class>com.wc.blog.controller.ConsoleController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ConsoleController</servlet-name>
+    <url-pattern>/ConsoleController</url-pattern>
+  </servlet-mapping>
+  
   <servlet>
     <description></description>
     <display-name>BlogController</display-name>
@@ -27,8 +32,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>BlogController</servlet-name>
-    <url-pattern>/BlogController</url-pattern>
+    <url-pattern>/blogShow</url-pattern>
   </servlet-mapping>
+  
   <filter>
     <display-name>LoginFilter</display-name>
     <filter-name>LoginFilter</filter-name>

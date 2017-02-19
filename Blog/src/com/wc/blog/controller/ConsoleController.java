@@ -2,7 +2,6 @@ package com.wc.blog.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,33 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
 import com.wc.blog.bean.Blog;
-import com.wc.blog.bean.Draft;
 import com.wc.blog.bean.User;
 import com.wc.blog.dao.BlogDao;
-import com.wc.blog.dao.DraftDao;
 
-/**
- * Servlet implementation class BlogController
- */
-public class BlogController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
-	private static Gson gson = new Gson();
-
-	/**
-	 * @see HttpServlet#HttpServlet()
-	 */
-	public BlogController() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
-	 *      response)
-	 */
+public class ConsoleController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
@@ -51,12 +28,11 @@ public class BlogController extends HttpServlet {
 		 * response.sendRedirect("/Blog/login.jsp"); // 这个return很重要！ return; }
 		 * response.sendRedirect("/Blog/console.jsp");
 		 */
-		request.setCharacterEncoding("UTF-8");// 传值编码
-		response.setContentType("text/html;charset=UTF-8");// 设置传输编码
+/*
 		String type = request.getParameter("type");
 		String id = request.getParameter("id");
 		
-		System.out.println("type:" + type + "id:" + id);
+		System.out.println("type:" + type + "id:" + id);*/
 		/*
 		 * String content = request.getParameter("content"); String tag =
 		 * request.getParameter("tag");
@@ -77,24 +53,18 @@ public class BlogController extends HttpServlet {
 			}
 		}
 */
-		if (Integer.valueOf(id) != 0) {
+	/*	if (Integer.valueOf(id) != 0) {
 			int blogId = Integer.valueOf(id);
 			PrintWriter out = response.getWriter();
 			System.out.println("blogId:" + blogId);
 				Blog blog = BlogDao.queryOneBlog(blogId);
 				// Write some content
-				//request.getSession().setAttribute("blog", blog);
-				  request.setAttribute("blog", blog);
-			       request.getRequestDispatcher("blog.jsp").forward(request, response);
-				/*response.sendRedirect("/Blog/blog.jsp");
-				PrintWriter p = response.getWriter();
-				String str = gson.toJson(blog);
-				out.println(str);
-				System.out.println(str);*/
+				request.getSession().setAttribute("blog", blog);
+				response.sendRedirect("/Blog/blog.jsp?id=" + blogId);
 				//request.getRequestDispatcher("/blog.jsp").forward(request, response);
 				//out.println("OK");
 		}
-
+*/
 	}
 
 	/**
@@ -125,29 +95,8 @@ public class BlogController extends HttpServlet {
 		String name = ((User) session.getAttribute("login-user")).getName();
 		int index = BlogDao.saveBlog(name, blog);
 		System.out.println("index:"+index);
-		response.sendRedirect(request.getContextPath()+"/blog.jsp?id=" + index);
-	}
-
-	@Override
-	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// super.doDelete(req, resp);
-		String type = req.getParameter("type");
-		String id = req.getParameter("id");
-		/*
-		 * String content = request.getParameter("content"); String tag =
-		 * request.getParameter("tag");
-		 */
-		if (type.equals("draft")) {
-			PrintWriter out = resp.getWriter();
-			System.out.println("type:" + type + "|id:" + id);
-			try {
-				DraftDao.deleteDraft(Integer.parseInt(id));
-				// Write some content
-				out.println("OK");
-			} finally {
-				out.close();
-			}
-		}
+		PrintWriter out = response.getWriter();
+		out.println(index);
+		//response.sendRedirect(request.getContextPath()+"/blogShow?id=" + index);
 	}
 }
