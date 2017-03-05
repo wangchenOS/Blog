@@ -8,6 +8,10 @@ public class Blog {
 	private String tag;
 	private int user_id;
 	
+	private byte published;
+	private String lastModifyTime;
+	private String publishTime;
+	
 	public int getId() {
 		return id;
 	}
@@ -43,5 +47,23 @@ public class Blog {
 	}
 	public void setUser_id(int user_id) {
 		this.user_id = user_id;
+	}
+	public byte getPublished() {
+		return published;
+	}
+	public void setPublished(byte published) {
+		this.published = published;
+	}
+	public String getLastModifyTime() {
+		return lastModifyTime;
+	}
+	public void setLastModifyTime(String lastModifyTime) {
+		this.lastModifyTime = lastModifyTime;
+	}
+	public String getPublishTime() {
+		return publishTime;
+	}
+	public void setPublishTime(String publishTime) {
+		this.publishTime = publishTime;
 	}
 }

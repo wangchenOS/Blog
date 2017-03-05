@@ -22,14 +22,15 @@ import com.wc.blog.dao.DraftDao;
 /**
  * Servlet implementation class BlogController
  */
-public class BlogController extends HttpServlet {
+public class HomeController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private static Gson gson = new Gson();
 
+	private static final int PAGE_SIZE = 5;
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public BlogController() {
+	public HomeController() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -41,72 +42,28 @@ public class BlogController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at:
-		// ").append(request.getContextPath());
-		/*
-		 * User login_user =
-		 * (User)request.getSession().getAttribute("login-user"); if(login_user
-		 * == null){ // 说明用户没有登录，让他跳转到登录页面 request.setAttribute("error",
-		 * "请登录！");
-		 * //request.getRequestDispatcher("/login").forward(request,response);
-		 * response.sendRedirect("/Blog/login.jsp"); // 这个return很重要！ return; }
-		 * response.sendRedirect("/Blog/console.jsp");
-		 */
 		request.setCharacterEncoding("UTF-8");// 传值编码
 		response.setContentType("text/html;charset=UTF-8");// 设置传输编码
-		String type = request.getParameter("type");
 		String id = request.getParameter("id");
-		
-		System.out.println("type:" + type + "id:" + id);
-		
-		String getServletPath =request.getServletPath();  
-		System.out.println("getServletPath:" + getServletPath);
-		/*
-		 * String content = request.getParameter("content"); String tag =
-		 * request.getParameter("tag");
-		 */
-		/*if (type.equals("draft")) {
-			List<Draft> list = DraftDao.queryAllDrafts();
-			PrintWriter out = response.getWriter();
-			Gson gson = new Gson();
-			String str = gson.toJson(list);
-			JsonObject obj = new JsonObject();
-			obj.addProperty("result", str);
-			System.out.println(obj.toString());
-			try {
-				// Write some content
-				out.println(str);
-			} finally {
-				out.close();
-			}
-		}
-*/
+
+		System.out.println("id:" + id);
+
 		if (id != null && Integer.valueOf(id) != 0) {
-			int blogId = Integer.valueOf(id);
-			PrintWriter out = response.getWriter();
-			System.out.println("blogId:" + blogId);
-				Blog blog = BlogDao.queryOneBlog(blogId);
-				// Write some content
-				//request.getSession().setAttribute("blog", blog);
-				  request.setAttribute("blog", blog);
-			       request.getRequestDispatcher("blog.jsp").forward(request, response);
-			       return;
-				
-		}
-		
-		
-		/*if (type == null ) {
-		    PageModel model = BlogDao.findBlogs(1, 5);
-				// Write some content
-				//request.getSession().setAttribute("blog", blog);
-				  request.setAttribute("model", model);
-			request.getRequestDispatcher("blogList.jsp").forward(request, response);
-			return;
+			int pageNo = Integer.valueOf(id);
 			
-		}*/
-		
-		
-		
+			PageModel model = BlogDao.findBlogs(pageNo, PAGE_SIZE);
+			request.setAttribute("model", model);
+			request.getRequestDispatcher("blogList.jsp").forward(request, response);
+			
+			return;
+		}
+
+		PageModel model = BlogDao.findBlogs(1, PAGE_SIZE);
+		// Write some content
+		// request.getSession().setAttribute("blog", blog);
+		request.setAttribute("model", model);
+		request.getRequestDispatcher("blogList.jsp").forward(request, response);
+		return;
 
 	}
 
@@ -137,8 +94,8 @@ public class BlogController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = ((User) session.getAttribute("login-user")).getName();
 		int index = BlogDao.saveBlog(name, blog);
-		System.out.println("index:"+index);
-		response.sendRedirect(request.getContextPath()+"/blog.jsp?id=" + index);
+		System.out.println("index:" + index);
+		response.sendRedirect(request.getContextPath() + "/blog.jsp?id=" + index);
 	}
 
 	@Override

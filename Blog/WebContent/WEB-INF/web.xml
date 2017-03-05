@@ -30,9 +30,25 @@
     <servlet-name>BlogController</servlet-name>
     <servlet-class>com.wc.blog.controller.BlogController</servlet-class>
   </servlet>
+ 
   <servlet-mapping>
     <servlet-name>BlogController</servlet-name>
-    <url-pattern>/blogShow</url-pattern>
+    <url-pattern>/showBlog</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+    <description></description>
+    <display-name>HomeController</display-name>
+    <servlet-name>HomeController</servlet-name>
+    <servlet-class>com.wc.blog.controller.HomeController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>HomeController</servlet-name>
+    <url-pattern>/home</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HomeController</servlet-name>
+    <url-pattern>/pages</url-pattern>
   </servlet-mapping>
   
   <filter>
@@ -44,4 +60,13 @@
     <filter-name>LoginFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+  
+  
+  <jsp-config>  
+      <taglib>  
+          <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>  
+          <taglib-location>/WEB-INF/c.tld</taglib-location>  
+      </taglib>  
+      
+  </jsp-config>  
 </web-app>

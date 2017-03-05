@@ -102,21 +102,12 @@
             <h2 class="blog-post-title"> 
             	<%=blog.getTitle() %>
             </h2>
-            <p class="blog-post-meta">January 1, 2014 by <a href="#">Mark</a></p>
-                <%=blog.getContent() %>
+            <p class="blog-post-meta">
+            	<%=blog.getPublishTime() %>
+            </p>
+           	 <div id="epiceditor"></div>
+             <input type="hidden" class="form-control" id="content" name="content" value="<%=blog.getContent()%>">
 
-          </div><!-- /.blog-post -->
-
-          <div class="blog-post">
-            <h2 class="blog-post-title">Another blog post</h2>
-            <p class="blog-post-meta">December 23, 2013 by <a href="#">Jacob</a></p>
-
-            <p>Cum sociis natoque penatibus et magnis <a href="#">dis parturient montes</a>, nascetur ridiculus mus. Aenean eu leo quam. Pellentesque ornare sem lacinia quam venenatis vestibulum. Sed posuere consectetur est at lobortis. Cras mattis consectetur purus sit amet fermentum.</p>
-            <blockquote>
-              <p>Curabitur blandit tempus porttitor. <strong>Nullam quis risus eget urna mollis</strong> ornare vel eu leo. Nullam id dolor id nibh ultricies vehicula ut id elit.</p>
-            </blockquote>
-            <p>Etiam porta <em>sem malesuada magna</em> mollis euismod. Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur.</p>
-            <p>Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.</p>
           </div><!-- /.blog-post -->
 
        
@@ -138,18 +129,10 @@
           <div class="sidebar-module">
             <h4>Archives</h4>
             <ol class="list-unstyled">
-              <li><a href="#">March 2014</a></li>
-              <li><a href="#">February 2014</a></li>
-              <li><a href="#">January 2014</a></li>
-              <li><a href="#">December 2013</a></li>
-              <li><a href="#">November 2013</a></li>
-              <li><a href="#">October 2013</a></li>
-              <li><a href="#">September 2013</a></li>
-              <li><a href="#">August 2013</a></li>
-              <li><a href="#">July 2013</a></li>
-              <li><a href="#">June 2013</a></li>
-              <li><a href="#">May 2013</a></li>
-              <li><a href="#">April 2013</a></li>
+              <li><a href="#">一月  2016</a></li>
+              <li><a href="#">二月  2016</a></li>
+              <li><a href="#">三月 2014</a></li>
+          
             </ol>
           </div>
           <div class="sidebar-module">
@@ -166,17 +149,67 @@
 
     </div><!-- /.container -->
 
-    <footer class="blog-footer">
+   <!--  <footer class="blog-footer">
       <p>Blog template built for <a href="http://getbootstrap.com">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
       <p>
         <a href="#">Back to top</a>
       </p>
-    </footer>
+    </footer> -->
 
 
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+     <script src="js/jquery-3.1.1.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/epiceditor.js"></script>
+    <script>
+        var opts = {
+          container: 'epiceditor',
+          textarea: null,
+          basePath: '',
+          clientSideStorage: true,
+          localStorageName: 'epiceditor',
+          useNativeFullscreen: true,
+          parser: marked,
+          file: {
+            name: 'epiceditor',
+            defaultContent: '',
+            autoSave: false
+          },
+          theme: {
+            base: './themes/base/epiceditor.css',
+            preview: './themes/preview/github.css',
+            editor: './themes/editor/epic-dark.css'
+          },
+          button: {
+            preview: true,
+            fullscreen: false,
+            bar: "hide"
+          },
+          focusOnLoad: false,
+          shortcut: {
+            modifier: 118,
+            fullscreen: 70,
+            preview: 80
+          },
+          string: {
+            togglePreview: 'Toggle Preview Mode',
+            toggleEdit: 'Toggle Edit Mode',
+            toggleFullscreen: 'Enter Fullscreen'
+          },
+          autogrow: true
+        }
+        var editor = new EpicEditor(opts).load();
+        var content = $("#content").val();
+        editor.importFile("<%=blog.getTitle() %>", content);
+        editor.open("<%=blog.getTitle() %>");
+  
+        editor.preview();
+        //var editor = new EpicEditor({basePath: '/static/lib/epiceditor'}).load();
+   
+    
+    </script>
   </body>
 
 </html>

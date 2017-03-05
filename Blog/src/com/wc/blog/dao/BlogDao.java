@@ -5,11 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.wc.blog.bean.Blog;
 import com.wc.blog.bean.Draft;
+import com.wc.blog.bean.PageModel;
 
 public class BlogDao {
 	public static int saveBlog(String name, Blog blog) {
@@ -283,6 +285,9 @@ public class BlogDao {
 				String tag = rs.getString("tag");
 				blog.setTag(tag );
 				
+				String publishTime = rs.getString("publishTime");
+				blog.setPublishTime(publishTime);;
+				
 			}
 		} catch (Exception e) {
 			System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -302,7 +307,118 @@ public class BlogDao {
 		}
 		return blog;
 	}
+	
+	
+	  public static PageModel findBlogs(int pageNo,int pageSize){  
+		  Connection conn = null;
+		  ResultSet rs = null;
+		  
+		  
+		  ResultSet rs2 = null;
+			
+          String sql="select * from Blog limit ?,?";  
+          PageModel pageModel=null;  
+          PreparedStatement pstm=null;  
+          Blog blog=null;  
+          List<Blog> list=new ArrayList<Blog>();  
+          try {  
+        	  conn = SQLiteJDBC.openConnection();
+        	  
+              pstm=conn.prepareStatement(sql);  
+              pstm.setInt(1, (pageNo-1)*pageSize);  
+              pstm.setInt(2, pageSize);  
+              System.out.println("limit from " + (pageNo-1)*pageSize + " to " + pageNo*pageSize);
+              rs=pstm.executeQuery();
+              while(rs.next()){  
+            	  blog=new Blog();  
+            	 
+            	  int id = rs.getInt("id");
+    				blog.setId(id);
+    				
+            	  String title = rs.getString("title");
+  				blog.setTitle(title);
+  				
+  				String content = rs.getString("content");
+  				
+  				
+  				String summary = occurTimes(content, "\n");
+  				System.out.println("Time is " + summary);
+  				blog.setContent(summary);
+  				
+  				String file = rs.getString("file");
+  				blog.setFile(file);
+  				
+  				String tag = rs.getString("tag");
+  				blog.setTag(tag );
+  				
+  				String publishTime = rs.getString("publishTime");
+  				blog.setPublishTime(publishTime);;
+                  
+  				list.add(blog);  
+              }  
+              
+              Statement stat = conn.createStatement(); 
+              rs2=stat.executeQuery("select count(*) from Blog;");  
+              int total=0;  
+              if(rs2.next()){  
+                  total=rs2.getInt(1);  
+              } 
+              pageModel=new PageModel();  
+              pageModel.setPageNo(pageNo);  
+              pageModel.setPageSize(pageSize);  
+              pageModel.setTotalRecords(total);  
+              pageModel.setList(list);  
+          } catch (SQLException e) {  
+              e.printStackTrace();  
+          }finally{  
+        	  try {
+  				if (rs != null) {
+  					rs.close();
+  				}
+  				if (rs2 != null) {
+  					rs2.close();
+  				}
+  				if (pstm != null) {
+  					pstm.close();
+  				}
+  			} catch (SQLException e) {
+  				System.out.println("SQLException");
+  			}
+  			SQLiteJDBC.closeConnection(conn);
+          }  
+          return pageModel;  
+	  }
+	  
+	  public static String occurTimes(String string, String a) {
+		    int pos = -2;
+		    int n = 0;
+		 
+		    while (pos != -1) {
+		        if (pos == -2) {
+		            pos = -1;
+		        }
+		        pos = string.indexOf(a, pos + 1);
+		        if (pos != -1) {
+		            n++;
+		        }
+		        
+		        if (n == 4) {
+		        	return string.substring(0, pos);
+		        }
+		    }
+		    
+		    return string;
+		}
+	  
 	public static void main(String[] args) {
-		readBlog("wc");
+		//readBlog("wc");
+		PageModel pageModel=findBlogs(1,5);
+		 System.out.print("当前页:"+pageModel.getPageNo()+" ");  
+         System.out.print("共"+pageModel.getTotalPages()+"页  ");  
+         System.out.print("首页:"+pageModel.getTopPageNo()+" ");  
+         System.out.print("上一页:"+pageModel.getPreviousPageNo()+" ");  
+         System.out.print("下一页:"+pageModel.getNextPageNo()+" ");  
+         System.out.print("尾页:"+pageModel.getBottomPageNo()+" ");  
+         System.out.print("共"+pageModel.getTotalRecords()+"条记录"); 
 	}
 }
