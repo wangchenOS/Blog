@@ -108,21 +108,23 @@
           },
           autogrow: true
         }
+      
         var editor = new EpicEditor(opts).load();
+  
         //var editor = new EpicEditor({basePath: '/static/lib/epiceditor'}).load();
    
-    
+   
     </script>
     <script type="text/javascript">
     	function saveBlog() {
     		 editor.save();
     		 var theContent = editor.exportFile();
     		  $("#content").val(theContent);
-    		  $("#type").val("draft");
+    		  //$("#type").val("1");
     		  //window.parent.location.href="";
     		  
     		  
-    		  var AjaxURL= "<%=basePath %>ConsoleController";    
+    		  var AjaxURL= "<%=basePath %>console.do";    
     	      //alert($('#form').serialize());
     	        $.ajax({
     	          type: "POST",
@@ -132,7 +134,7 @@
     	          success: function (result) {
     	            alert(result);
     	            
-    	            window.parent.location.href="<%=basePath %>blogShow?id=" + result ;
+    	            window.parent.location.href="<%=basePath %>show.do?id=" + result ;
     	            //加载最大可退金额
     	            //$("#spanMaxAmount").html(strresult);
     	          },
@@ -148,8 +150,11 @@
     		 editor.save();
     		 var theContent = editor.exportFile();
     		  $("#content").val(theContent);
-    		  $("#type").val("blog");
+    		  $("#type").val("0");
    	}
+    	
+    	 
+       
 		/* $(document).ready(function(){
 	    $("form").submit(function(e){
 	    //e.preventDefault();

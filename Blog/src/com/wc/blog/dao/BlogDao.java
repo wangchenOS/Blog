@@ -33,14 +33,16 @@ public class BlogDao {
 			if (rs.next()) {
 				// int id = rs.getInt("id");
 				int user_id = rs.getInt("id");
-				sql = "INSERT INTO Blog (title,content,file,tag,user_id) " +
-		               "VALUES (?, ?, ?, ?, ?)"; 
+				sql = "INSERT INTO Blog (title,content,file,tag,user_id, published, publishTime) " +
+		               "VALUES (?, ?, ?, ?, ?, ?, ?)"; 
 				pst = c.prepareStatement(sql);
 				pst.setString(1, blog.getTitle());
 				pst.setString(2, blog.getContent());
 				pst.setString(3, blog.getFile());
 				pst.setString(4, blog.getTag());
 				pst.setInt(5, user_id);
+				pst.setInt(6, blog.getPublished());
+				pst.setString(7, blog.getPublishTime());
 				
 				pst.executeUpdate();
 				

@@ -2,6 +2,8 @@ package com.wc.blog.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -16,55 +18,9 @@ import com.wc.blog.dao.BlogDao;
 public class ConsoleController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		// response.getWriter().append("Served at:
-		// ").append(request.getContextPath());
-		/*
-		 * User login_user =
-		 * (User)request.getSession().getAttribute("login-user"); if(login_user
-		 * == null){ // 说明用户没有登录，让他跳转到登录页面 request.setAttribute("error",
-		 * "请登录！");
-		 * //request.getRequestDispatcher("/login").forward(request,response);
-		 * response.sendRedirect("/Blog/login.jsp"); // 这个return很重要！ return; }
-		 * response.sendRedirect("/Blog/console.jsp");
-		 */
-/*
-		String type = request.getParameter("type");
-		String id = request.getParameter("id");
-		
-		System.out.println("type:" + type + "id:" + id);*/
-		/*
-		 * String content = request.getParameter("content"); String tag =
-		 * request.getParameter("tag");
-		 */
-		/*if (type.equals("draft")) {
-			List<Draft> list = DraftDao.queryAllDrafts();
-			PrintWriter out = response.getWriter();
-			Gson gson = new Gson();
-			String str = gson.toJson(list);
-			JsonObject obj = new JsonObject();
-			obj.addProperty("result", str);
-			System.out.println(obj.toString());
-			try {
-				// Write some content
-				out.println(str);
-			} finally {
-				out.close();
-			}
-		}
-*/
-	/*	if (Integer.valueOf(id) != 0) {
-			int blogId = Integer.valueOf(id);
-			PrintWriter out = response.getWriter();
-			System.out.println("blogId:" + blogId);
-				Blog blog = BlogDao.queryOneBlog(blogId);
-				// Write some content
-				request.getSession().setAttribute("blog", blog);
-				response.sendRedirect("/Blog/blog.jsp?id=" + blogId);
-				//request.getRequestDispatcher("/blog.jsp").forward(request, response);
-				//out.println("OK");
-		}
-*/
+		System.out.println("ConsoleController");
+		request.getRequestDispatcher("/console.jsp").forward(request,response);
+
 	}
 
 	/**
@@ -81,15 +37,18 @@ public class ConsoleController extends HttpServlet {
 		String content = request.getParameter("content");
 		String tag = request.getParameter("tag");
 		String id = request.getParameter("id");
-
-		System.out.println(title);
-		System.out.println(content);
-		System.out.println(tag);
-		System.out.println(id);
+		String type = request.getParameter("type");
+		
+		Date now = new Date(); 
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分");
+		String publishTime = dateFormat.format(now); 
+		System.out.println(publishTime); 
 
 		blog.setTitle(title);
 		blog.setContent(content);
 		blog.setTag(tag);
+		blog.setPublishTime(publishTime);
+		blog.setPublished(Byte.parseByte(type));
 
 		HttpSession session = request.getSession();
 		String name = ((User) session.getAttribute("login-user")).getName();

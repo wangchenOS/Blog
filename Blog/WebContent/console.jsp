@@ -65,7 +65,7 @@
      <script type="text/javascript">
 	     function showDraft()
 	     {
-	    	$("iframe").attr("src", "Draft.jsp");
+	    	$("iframe").attr("src", "draft.jsp");
 	     }
 		
 	</script>

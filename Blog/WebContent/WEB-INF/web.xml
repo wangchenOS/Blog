@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:web="http://java.sun.com/xml/ns/javaee" xmlns:jsp="http://java.sun.com/xml/ns/javaee/jsp" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   <welcome-file-list>
     <welcome-file>index.html</welcome-file>
   </welcome-file-list>
-  
   <servlet>
     <servlet-name>LoginController</servlet-name>
     <servlet-class>com.wc.blog.controller.LoginController</servlet-class>
   </servlet>
   <servlet-mapping>
     <servlet-name>LoginController</servlet-name>
-    <url-pattern>/login</url-pattern>
+    <url-pattern>/login.do</url-pattern>
   </servlet-mapping>
+  
   
   <servlet>
     <description></description>
@@ -21,8 +21,9 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ConsoleController</servlet-name>
-    <url-pattern>/ConsoleController</url-pattern>
+    <url-pattern>/console.do</url-pattern>
   </servlet-mapping>
+  
   
   <servlet>
     <description></description>
@@ -30,13 +31,13 @@
     <servlet-name>BlogController</servlet-name>
     <servlet-class>com.wc.blog.controller.BlogController</servlet-class>
   </servlet>
- 
   <servlet-mapping>
     <servlet-name>BlogController</servlet-name>
-    <url-pattern>/showBlog</url-pattern>
+    <url-pattern>/show.do</url-pattern>
   </servlet-mapping>
   
-   <servlet>
+  
+  <servlet>
     <description></description>
     <display-name>HomeController</display-name>
     <servlet-name>HomeController</servlet-name>
@@ -44,12 +45,13 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>HomeController</servlet-name>
-    <url-pattern>/home</url-pattern>
+    <url-pattern>/home.do</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>HomeController</servlet-name>
     <url-pattern>/pages</url-pattern>
   </servlet-mapping>
+  
   
   <filter>
     <display-name>LoginFilter</display-name>
@@ -60,13 +62,25 @@
     <filter-name>LoginFilter</filter-name>
     <url-pattern>*.jsp</url-pattern>
   </filter-mapping>
+   <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
   
-  
-  <jsp-config>  
-      <taglib>  
-          <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>  
-          <taglib-location>/WEB-INF/c.tld</taglib-location>  
-      </taglib>  
-      
-  </jsp-config>  
+  <jsp-config>
+    <taglib>
+      <taglib-uri>http://java.sun.com/jsp/jstl/core</taglib-uri>
+      <taglib-location>/WEB-INF/c.tld</taglib-location>
+    </taglib>
+  </jsp-config>
+  <servlet>
+    <description></description>
+    <display-name>ImageController</display-name>
+    <servlet-name>ImageController</servlet-name>
+    <servlet-class>com.wc.blog.controller.ImageController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ImageController</servlet-name>
+    <url-pattern>/ImageController</url-pattern>
+  </servlet-mapping>
 </web-app>

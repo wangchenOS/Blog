@@ -987,11 +987,13 @@
 
       // When a user presses "esc", revert everything!
       if (e.keyCode == 27 && self.is('fullscreen')) {
+    	  console.log("1111");
         self._exitFullscreen(fsElement);
       }
 
       // Check for ctrl + s (since a lot of people do it out of habit) and make it do nothing
       if (isCtrl === true && e.keyCode == 83) {
+    	  console.log("1111");
         self.save();
         e.preventDefault();
         isCtrl = false;
@@ -1012,14 +1014,59 @@
 
     function pasteHandler(e) {
       var content;
+      var cbd = e.clipboardData;
       if (e.clipboardData) {
         //FF 22, Webkit, "standards"
+    	//alert("catch paste event!");
+    	console.log("catch paste event!");
         e.preventDefault();
-        content = e.clipboardData.getData("text/plain");
-        self.editorIframeDocument.execCommand("insertText", false, content);
+        
+        for(var i = 0; i < cbd.items.length; i++) {
+	        var item = cbd.items[i];
+	        console.log(item.kind);
+	        if(item.kind == "file"){
+	            var blob = item.getAsFile();
+	            if (blob.size === 0) {
+	                return;
+	            }
+	            // blob 就是从剪切板获得的文件 可以进行上传或其他操作
+	            for(var i = 0; i < cbd.items.length; i++) {
+        	        var item = cbd.items[i];
+        	        if(item.kind == "file"){
+        	            var blob = item.getAsFile();
+        	            if (blob.size === 0) {
+        	                return;
+        	            }
+        	            var xmlhttp = new XMLHttpRequest();;
+        	           
+        	           
+        	            xmlhttp.onreadystatechange=function()
+        	             {
+        	              if (xmlhttp.readyState==4 && xmlhttp.status==200)
+        	                {
+        	                //document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+        	            	  console.log('Ajax success');
+        	            	  var imagePath = xmlhttp.responseText;
+        	            	  imagePath = "![image](" + imagePath + ")";
+        	            	  self.editorIframeDocument.execCommand("insertText", false, imagePath);
+        	                }
+        	              }
+        	            xmlhttp.open("POST","/Blog/ImageController",true);
+        	            xmlhttp.send(blob);
+        	            // blob 就是从剪切板获得的文件 可以进行上传或其他操作
+        	        }
+        	    }
+	        }else if(item.kind == "string"){
+	        	console.log("catch paste text event!");
+	        	content = e.clipboardData.getData("text/plain");
+	            self.editorIframeDocument.execCommand("insertText", false, content);
+	        }
+	    }
+       
       }
       else if (window.clipboardData) {
         //IE, "nasty"
+    	  console.log("1111");
         e.preventDefault();
         content = window.clipboardData.getData("Text");
         content = content.replace(/</g, '&lt;');
@@ -1050,6 +1097,7 @@
         shortcutHandler(e);
       });
       eventableIframes[i].addEventListener('paste', function (e) {
+    	console.log("1111");
         pasteHandler(e);
       });
     }

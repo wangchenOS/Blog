@@ -67,10 +67,11 @@
    <script src="js/jquery-3.1.1.js"></script>
     <script src="js/bootstrap.js"></script>
      <script type="text/javascript">
+    
      
      function deleteDraft(id) {
     	  $.ajax({
-    		    url: "<%=basePath%>/BlogController?type=draft&id=" + id,
+    		    url: "<%=basePath%>/showBlog?type=draft&id=" + id,
     		    type: 'DELETE',
     		    success: function(result) {
     		        // Do something with the result

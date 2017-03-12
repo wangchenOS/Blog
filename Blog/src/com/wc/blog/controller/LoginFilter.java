@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
  * Servlet Filter implementation class LoginFilter
  */
 public class LoginFilter implements Filter {
-	public static final String login_page = "/Blog/login.jsp";
+	public static final String login_page = "/Blog/login.do";
 	//public static final String logout_page = "/test/admin/Public/login.jsp";
 
 	/**
@@ -49,7 +49,7 @@ public class LoginFilter implements Filter {
 		String targetURL = currentURL.substring(ctxPath.length());
 		HttpSession session = request.getSession(false);
 		// 对当前页面进行判断，如果当前页面不为登录页面
-		if (!("/login.jsp".equals(targetURL))) {
+		if (!("/login.do".equals(targetURL))) {
 			System.out.println("TargetUrl: " + targetURL + " | CtxPath:" + ctxPath + " | CurrentURL:" + currentURL);
 			// 在不为登陆页面时，再进行判断，如果不是登陆页面也没有session则跳转到登录页面，
 			if (session == null || session.getAttribute("login-user") == null) {

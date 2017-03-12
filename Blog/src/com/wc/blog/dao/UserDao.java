@@ -14,7 +14,7 @@ public class UserDao {
 		try {
 			c = SQLiteJDBC.openConnection();
 			c.setAutoCommit(false);
-			System.out.println("Opened database successfully");
+			System.out.println("checkUser Opened database successfully");
 
 			String sql = "select * from User where name = ?";  // ���в���
 			pst = c.prepareStatement(sql);

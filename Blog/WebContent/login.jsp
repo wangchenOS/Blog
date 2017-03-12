@@ -30,7 +30,7 @@
 <body>
  <div class="container">
 
-      <form class="form-signin" action="<%=basePath %>login" method="POST">
+      <form class="form-signin" action="<%=basePath %>login.do" method="POST">
         <h2 class="form-signin-heading">Please sign in</h2>
         <label for="inputName" class="sr-only">User name</label>
         <input type="text" id="inputName" name="inputName" class="form-control" placeholder="User name" required autofocus>
