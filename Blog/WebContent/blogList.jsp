@@ -33,10 +33,8 @@
 	<div class="blog-masthead">
 		<div class="container">
 			<nav class="blog-nav">
-				<a class="blog-nav-item active" href="#">Home</a> <a
-					class="blog-nav-item" href="#">New features</a> <a
-					class="blog-nav-item" href="#">Press</a> <a class="blog-nav-item"
-					href="#">New hires</a> <a class="blog-nav-item" href="#">About</a>
+				<a class="blog-nav-item active" href="<%=basePath %>home.do">Home</a>
+			    <a class="blog-nav-item" href="#">About</a>
 			</nav>
 		</div>
 	</div>
@@ -44,8 +42,8 @@
 	<div class="container">
 
 		<div class="blog-header">
-			<h1 class="blog-title">The Bootstrap Blog</h1>
-			<p class="lead blog-description">汪臣的个人博客</p>
+			<h1 class="blog-title">柳絮随风的个人博客</h1>
+			<p class="lead blog-description">个人博客</p>
 		</div>
 
 		<div class="row">
@@ -63,7 +61,7 @@
 
 				<div class="blog-post">
 					<h2 class="blog-post-title">
-					    <a href="<%=basePath %>showBlog?id=<%=blog.getId()%>">
+					    <a href="<%=basePath %>show.do?id=<%=blog.getId()%>">
 					    	<%=blog.getTitle()%>
 					    </a>
 						
@@ -109,9 +107,11 @@
 				<div class="sidebar-module">
 					<h4>Archives</h4>
 					<ol class="list-unstyled">
-						<li><a href="#">一月 2016</a></li>
-						<li><a href="#">二月 2016</a></li>
-						<li><a href="#">三月 2014</a></li>
+					  <li><a href="#">十一月  2016</a></li>
+		              <li><a href="#">十二月  2016</a></li>
+		              <li><a href="#">一月 2017</a></li>
+		              <li><a href="#">二月 2017</a></li>
+		              <li><a href="#">三月 2017</a></li>
 
 					</ol>
 				</div>

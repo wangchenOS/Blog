@@ -31,7 +31,6 @@ public class LoginController extends HttpServlet {
 		// TODO Auto-generated method stub
 		//response.getWriter().append("Served at: ").append(request.getContextPath());
 		request.getRequestDispatcher("login.jsp").forward(request, response);
-		//response.sendRedirect("/Blog/login.jsp");
 	}
 
 	/**
@@ -51,14 +50,10 @@ public class LoginController extends HttpServlet {
 			user.setName(name);
 			user.setPasswd(password);
 			session.setAttribute("login-user", user);
-			//request.getRequestDispatcher("/BlogController").forward(request,response);
 			response.sendRedirect("/Blog/console.do");
-			//request.getRequestDispatcher("/console.do").forward(request, response);
 			return;
 		}
 		request.getRequestDispatcher("login.jsp").forward(request, response);
-		
-			//response.sendRedirect("/Blog/login.jsp");
 	}
 
 }

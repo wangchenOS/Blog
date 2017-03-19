@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8" %>
-
+<%@ page import="com.wc.blog.bean.Blog"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -25,22 +25,26 @@
     <%
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+		
 	%>
 </head>
 <body>
  <div class="container-fluid">
-      <div class="row">
+      <!-- <div class="row">
         <h1 style="text-align:center">博客后台</h1>
-      </div>
+      </div> -->
       <div class="row">
-          <form id="form" name="form" action="<%=basePath %>ConsoleController" method="POST">
+          <form id="form" name="form">
               <input type="hidden" class="form-control" id="content" name="content" value="1">
               <input type="hidden" class="form-control" id="type" name="type" value="1">
+              <input type="hidden" class="form-control" id="draftId" name="draftId" value="-1">
               
               <div class="form-group">
                 <label for="title">标题</label>
-                <input type="text" class="form-control" id="title" name="tile" placeholder="Title" required  >
-              </div>
+               
+                 <input type="text" class="form-control" id="title" name="tile" placeholder="Title" required  >
+               
+                </div>
               <div class="form-group">
                 <label>正文</label>
                 <div id="epiceditor"></div>
@@ -57,7 +61,7 @@
                 <!--input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password"-->
               </div>
             
-              <button type="submit" class="btn btn-primary" onclick="saveDraft()">保存</button>
+              <button type="button" class="btn btn-primary" onclick="saveDraft()">保存</button>
               <button type="button" class="btn btn-primary" onclick="saveBlog()">发布</button>
             </form>
         </div>
@@ -111,6 +115,25 @@
       
         var editor = new EpicEditor(opts).load();
   
+        var draftId = $("#draftId", window.parent.document).val();
+        //alert(draftId);
+        if (draftId) {
+        	$("#draftId").val(draftId);
+        }
+        
+        var draftTitle = $("#draftTitle", window.parent.document).val();
+        if (draftTitle) {
+        	$("#title").val(draftTitle);
+        }
+        var draftContent = $("#draftContent", window.parent.document).val();
+        if (draftContent) {
+        	editor.importFile(draftTitle, draftContent);
+            editor.open(draftTitle);
+        }
+        var draftTag = $("#draftTag", window.parent.document).val();
+ 		if (draftTag) {
+ 			$("#tag").val(draftTag);
+        }
         //var editor = new EpicEditor({basePath: '/static/lib/epiceditor'}).load();
    
    
@@ -132,8 +155,6 @@
     	          url: AjaxURL,
     	          data: $('#form').serialize(),
     	          success: function (result) {
-    	            alert(result);
-    	            
     	            window.parent.location.href="<%=basePath %>show.do?id=" + result ;
     	            //加载最大可退金额
     	            //$("#spanMaxAmount").html(strresult);
@@ -149,8 +170,26 @@
     	function saveDraft() {
     		 editor.save();
     		 var theContent = editor.exportFile();
-    		  $("#content").val(theContent);
-    		  $("#type").val("0");
+    		 $("#content").val(theContent);
+    		 $("#type").val("0");
+    		 
+    		  var AjaxURL= "<%=basePath %>console.do";    
+    	      //alert($('#form').serialize());
+    	        $.ajax({
+    	          type: "POST",
+    	          dataType: "html",
+    	          url: AjaxURL,
+    	          data: $('#form').serialize(),
+    	          success: function (result) {
+    	            alert(result);
+    	            
+    	            window.location.href="<%=basePath %>draft.jsp";
+    	          },
+    	          error: function(data) {
+    	            //alert("error:"+data.responseText);
+    	           }
+    	 
+    	        });
    	}
     	
     	 

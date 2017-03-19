@@ -81,6 +81,6 @@
   </servlet>
   <servlet-mapping>
     <servlet-name>ImageController</servlet-name>
-    <url-pattern>/ImageController</url-pattern>
+    <url-pattern>/image.do</url-pattern>
   </servlet-mapping>
 </web-app>

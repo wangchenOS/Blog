@@ -1,9 +1,5 @@
 package com.wc.blog.dao;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -22,6 +18,8 @@ public class DraftDao {
 			Draft d = new Draft();
 			d.setId(blog.getId());
 			d.setTitle(blog.getTitle());
+			d.setLastModifyTime(blog.getLastModifyTime());
+			d.setPublished(blog.getPublished());
 			list.add(d);
 		}
 		

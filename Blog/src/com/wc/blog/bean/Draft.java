@@ -6,6 +6,9 @@ public class Draft {
 	private int readCount;
 	private int commentCount;
 	
+	private byte published;
+	private String lastModifyTime;
+	
 	
 	public int getId() {
 		return id;
@@ -30,5 +33,17 @@ public class Draft {
 	}
 	public void setCommentCount(int commentCount) {
 		this.commentCount = commentCount;
+	}
+	public byte getPublished() {
+		return published;
+	}
+	public void setPublished(byte published) {
+		this.published = published;
+	}
+	public String getLastModifyTime() {
+		return lastModifyTime;
+	}
+	public void setLastModifyTime(String lastModifyTime) {
+		this.lastModifyTime = lastModifyTime;
 	}
 }

@@ -172,13 +172,17 @@ public class BlogDao {
 			c.setAutoCommit(false);
 			System.out.println("Opened database successfully");
 
-			String sql = "update Blog set title = ?, content = ?, file = ?, tag = ? where id = ?";
+			String sql = "update Blog set title = ?, content = ?, file = ?, tag = ?, published = ?, publishTime = ? where id = ?";
 			pst = c.prepareStatement(sql);
 			pst.setString(1, blog.getTitle());
 			pst.setString(2, blog.getContent());
 			pst.setString(3, blog.getFile());
 			pst.setString(4, blog.getTag());
-			pst.setInt(5, id);
+			pst.setInt(5, blog.getPublished());
+			pst.setString(6, blog.getPublishTime());
+			pst.setInt(7, id);
+			
+			pst.executeUpdate();
 			c.commit();
 			
 		} catch (Exception e) {
@@ -307,6 +311,8 @@ public class BlogDao {
 			SQLiteJDBC.closeConnection(c);
 
 		}
+		
+		blog.setId(id);
 		return blog;
 	}
 	

@@ -56,16 +56,16 @@ public class BlogController extends HttpServlet {
 		response.setContentType("text/html;charset=UTF-8");// 设置传输编码
 		String type = request.getParameter("type");
 		String id = request.getParameter("id");
-		
-		System.out.println("type:" + type + "id:" + id);
-		
-		String getServletPath =request.getServletPath();  
+
+		System.out.println("type:" + type + " id:" + id);
+
+		String getServletPath = request.getServletPath();
 		System.out.println("getServletPath:" + getServletPath);
 		/*
 		 * String content = request.getParameter("content"); String tag =
 		 * request.getParameter("tag");
 		 */
-		/*if (type.equals("draft")) {
+		if (type != null && type.equals("draft")) {
 			List<Draft> list = DraftDao.queryAllDrafts();
 			PrintWriter out = response.getWriter();
 			Gson gson = new Gson();
@@ -79,34 +79,30 @@ public class BlogController extends HttpServlet {
 			} finally {
 				out.close();
 			}
-		}
-*/
-		if (id != null && Integer.valueOf(id) != 0) {
-			int blogId = Integer.valueOf(id);
-			PrintWriter out = response.getWriter();
-			System.out.println("blogId:" + blogId);
+		} else {
+			if (id != null && Integer.valueOf(id) != 0) {
+				int blogId = Integer.valueOf(id);
+				PrintWriter out = response.getWriter();
+				System.out.println("blogId:" + blogId);
 				Blog blog = BlogDao.queryOneBlog(blogId);
 				// Write some content
-				//request.getSession().setAttribute("blog", blog);
-				  request.setAttribute("blog", blog);
-			       request.getRequestDispatcher("blog.jsp").forward(request, response);
-			       return;
-				
+				// request.getSession().setAttribute("blog", blog);
+				request.setAttribute("blog", blog);
+				request.getRequestDispatcher("blog.jsp").forward(request, response);
+				return;
+
+			}
 		}
-		
-		
-		/*if (type == null ) {
-		    PageModel model = BlogDao.findBlogs(1, 5);
-				// Write some content
-				//request.getSession().setAttribute("blog", blog);
-				  request.setAttribute("model", model);
-			request.getRequestDispatcher("blogList.jsp").forward(request, response);
-			return;
-			
-		}*/
-		
-		
-		
+
+		/*
+		 * if (type == null ) { PageModel model = BlogDao.findBlogs(1, 5); //
+		 * Write some content //request.getSession().setAttribute("blog", blog);
+		 * request.setAttribute("model", model);
+		 * request.getRequestDispatcher("blogList.jsp").forward(request,
+		 * response); return;
+		 * 
+		 * }
+		 */
 
 	}
 
@@ -137,8 +133,8 @@ public class BlogController extends HttpServlet {
 		HttpSession session = request.getSession();
 		String name = ((User) session.getAttribute("login-user")).getName();
 		int index = BlogDao.saveBlog(name, blog);
-		System.out.println("index:"+index);
-		response.sendRedirect(request.getContextPath()+"/blog.jsp?id=" + index);
+		System.out.println("index:" + index);
+		response.sendRedirect(request.getContextPath() + "/blog.jsp?id=" + index);
 	}
 
 	@Override

@@ -43,7 +43,7 @@
                 <td>Mark</td>
                 <td>Otto</td>
                 <td>  
-                	<button type="button" class="btn btn-primary">编辑</button>
+                	<button type="button" class="btn btn-primary" >编辑</button>
                 	<button type="button" class="btn btn-danger">删除</button>
                 </td>
               </tr>
@@ -70,23 +70,35 @@
     
      
      function deleteDraft(id) {
-    	  $.ajax({
-    		    url: "<%=basePath%>/showBlog?type=draft&id=" + id,
+    	    $.ajax({
+    		    url: "<%=basePath%>/console.do?id=" + id,
     		    type: 'DELETE',
     		    success: function(result) {
     		        // Do something with the result
-    		        var objName = "#" + id;
     		        $("#" + id).remove();
     		    }
     		});
      }
+     
+     function editDraft(id) {
+    	 window.parent.location.href="<%=basePath %>console.do?id=" + id;
+   	 <%--  $.ajax({
+   		    url: "<%=basePath%>/console.do?type=draft&id=" + id,
+   		    type: 'DELETE',
+   		    success: function(result) {
+   		        // Do something with the result
+   		        var objName = "#" + id;
+   		        $("#" + id).remove();
+   		    }
+   		}); --%>
+    }
      
      $(document).ready(function(){
     	<%--   
     	  htmlobj=$.ajax({url:"<%=basePath%>/BlogController?type=draft",async:false});
     	  $("#myDiv").html(htmlobj.responseText);
     	   --%>
-    	  $.get("<%=basePath%>/BlogController?type=draft", function(result){
+    	  $.get("<%=basePath%>/show.do?type=draft", function(result){
     		    var json = $.parseJSON(result);
     		    $.each(json, function(i, item) {
     	            $("tbody").append(
@@ -95,7 +107,7 @@
 	    	            "<td>" + item.readCount + "</td>" +
 	    	            "<td>" + item.commentCount + "</td>" +
 	                    "<td>" +
-	                    "<button type=\"button\" class=\"btn btn-primary\">编辑</button>" +
+	                    "<button type=\"button\" class=\"btn btn-primary\" onclick=\"editDraft("+item.id +")\">编辑</button>" +
 	                    "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteDraft("+item.id +")\">删除</button>" +
 	                    "<td>" + "<tr>");
     	        });

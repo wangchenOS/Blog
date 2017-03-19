@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=utf-8"%>
+<%@ page import="com.wc.blog.bean.Blog"%>
 <!DOCTYPE html>
 <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,9 +21,23 @@
 	<%
 		String path = request.getContextPath();
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
+        Blog blog=(Blog)request.getAttribute("blog");
+        
+       
 	%>
 </head>
 <body>
+   <%
+		if (blog != null) {
+	%>
+	 <input type="hidden"  id="draftId" name=""draftId"" value="<%=blog.getId()%>">
+	 <input type="hidden"  id="draftTitle" name="draftTitle" value="<%=blog.getTitle()%>">
+	 <input type="hidden"  id="draftContent" name="draftContent" value="<%=blog.getContent()%>">
+	 <input type="hidden"  id="draftTag" name="draftTag" value="<%=blog.getTag()%>">
+	<%
+		}
+	%>
+   
   <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
@@ -50,8 +65,6 @@
           
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
           <div class="row placeholders">
              <iframe src="editor.jsp" frameBorder="0" width="100%" scrolling="no" height="900"></iframe>
           </div>

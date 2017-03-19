@@ -77,10 +77,7 @@ public class ImageController extends HttpServlet {
         out.println(urlReturn);
 	}
 
-	private  String getPath() {
-		String path = this.getServletContext().getRealPath("/");
-		return path;
-	}
+
 	
 	public static void main(String[] args) {
 		StringBuffer url = new StringBuffer("http://localhost:8080/Blog/console.jsp");

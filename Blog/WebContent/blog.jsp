@@ -23,54 +23,7 @@
 		String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 	%>
 </head>
-	<!-- <body>
-	  <nav class="navbar navbar-inverse navbar-fixed-top">
-	      <div class="container-fluid">
-	        <div class="navbar-header">
-	          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-	            <span class="sr-only">Toggle navigation</span>
-	            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="#"></a>
-        </div>
-       
-      </div>
-    </nav>
 
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">发布文章</a></li>
-            <li><a href="" onclick="">文章管理</a></li>
-            <li><a href="#" onclick="showDraft()">草稿夹</a></li>
-          </ul>
-          
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <h1 class="page-header">Dashboard</h1>
-
-          <div class="row placeholders">
-             <iframe src="editor.jsp" frameBorder="0" width="100%" scrolling="no" height="900"></iframe>
-          </div>
-
-        </div>
-      </div>
-    </div>
-    
-     <script src="js/jquery-3.1.1.js"></script>
-    <script src="js/bootstrap.js"></script>
-     <script type="text/javascript">
-	     function showDraft()
-	     {
-	    	$("iframe").attr("src", "Draft.jsp");
-	     }
-		
-	</script>
-</body> -->
   <%
       Blog blog=(Blog)request.getAttribute("blog");
    %>
@@ -78,10 +31,8 @@
     <div class="blog-masthead">
       <div class="container">
         <nav class="blog-nav">
-          <a class="blog-nav-item active" href="#">Home</a>
-          <a class="blog-nav-item" href="#">New features</a>
-          <a class="blog-nav-item" href="#">Press</a>
-          <a class="blog-nav-item" href="#">New hires</a>
+          <a class="blog-nav-item active" href="<%=basePath %>home.do">Home</a>
+       
           <a class="blog-nav-item" href="#">About</a>
         </nav>
       </div>
@@ -90,8 +41,8 @@
     <div class="container">
 
       <div class="blog-header">
-        <h1 class="blog-title">The Bootstrap Blog</h1>
-        <p class="lead blog-description">The official example template of creating a blog with Bootstrap.</p>
+       		<h1 class="blog-title">柳絮随风的个人博客</h1>
+			<p class="lead blog-description">个人博客</p>
       </div>
 
       <div class="row">
@@ -129,9 +80,11 @@
           <div class="sidebar-module">
             <h4>Archives</h4>
             <ol class="list-unstyled">
-              <li><a href="#">一月  2016</a></li>
-              <li><a href="#">二月  2016</a></li>
-              <li><a href="#">三月 2014</a></li>
+              <li><a href="#">十一月  2016</a></li>
+              <li><a href="#">十二月  2016</a></li>
+              <li><a href="#">一月 2017</a></li>
+              <li><a href="#">二月 2017</a></li>
+              <li><a href="#">三月 2017</a></li>
           
             </ol>
           </div>

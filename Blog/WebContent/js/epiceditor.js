@@ -987,13 +987,11 @@
 
       // When a user presses "esc", revert everything!
       if (e.keyCode == 27 && self.is('fullscreen')) {
-    	  console.log("1111");
         self._exitFullscreen(fsElement);
       }
 
       // Check for ctrl + s (since a lot of people do it out of habit) and make it do nothing
       if (isCtrl === true && e.keyCode == 83) {
-    	  console.log("1111");
         self.save();
         e.preventDefault();
         isCtrl = false;
@@ -1049,9 +1047,11 @@
         	            	  var imagePath = xmlhttp.responseText;
         	            	  imagePath = "![image](" + imagePath + ")";
         	            	  self.editorIframeDocument.execCommand("insertText", false, imagePath);
+        	                } else {
+        	                	 console.log('Ajax failed');
         	                }
         	              }
-        	            xmlhttp.open("POST","/Blog/ImageController",true);
+        	            xmlhttp.open("POST","/Blog/image.do",true);
         	            xmlhttp.send(blob);
         	            // blob 就是从剪切板获得的文件 可以进行上传或其他操作
         	        }
